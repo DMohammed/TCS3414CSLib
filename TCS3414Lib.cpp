@@ -63,16 +63,12 @@ void TCS3414::stop() {
 }
 
 void TCS3414::getRGB(uint16_t * red, uint16_t * green, uint16_t * blue, uint16_t * clr) {
-  //    delay(500);
-
   Wire.beginTransmission(TCS3414_ADDR);
   Wire.write(CMD_WRITE | REG_BLOCK_READ);
   Wire.endTransmission();
 
   delay(20);
-  //Wire.beginTransmission(TCS3414_ADDR);
   Wire.requestFrom(TCS3414_ADDR, 8);
-  //while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
   byte * b = (byte*)green;
   b[0] = Wire.read();
   b[1] = Wire.read();
@@ -85,24 +81,18 @@ void TCS3414::getRGB(uint16_t * red, uint16_t * green, uint16_t * blue, uint16_t
   b = (byte*)clr;
   b[0] = Wire.read();
   b[1] = Wire.read();
-  //Wire.endTransmission();
 }
 
 void TCS3414::getValues(uint16_t * values) {
-  //    delay(500);
   Wire.beginTransmission(TCS3414_ADDR);
   Wire.write(CMD_WRITE | REG_BLOCK_READ);
   Wire.endTransmission();
 
-  //Wire.beginTransmission(TCS3414_ADDR);
   Wire.requestFrom(TCS3414_ADDR, 8);
-  //while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
   byte * b = (byte*)values;
   for (int i = 0; i < 8; i++) {
     b[i] = Wire.read();
-    //Serial.println(readingdata[i],BIN);
   }
-  //Wire.endTransmission();
 }
 
 void TCS3414::disableADC() {
@@ -127,33 +117,10 @@ void TCS3414::setLevelThreshold(byte reg, uint16_t thresh) {
 }
 
 void TCS3414::setIntegrationTime(byte itime) {
-  //    this->itime = itime & 0x0F;
   _writeReg(REG_TIMING, itime);
 }
 
 void TCS3414::setGain(byte gain, byte prescaler) {
-  /*
-    switch(gain) {
-   case GAIN_4:
-   this->gain = 4;
-   break;
-   case GAIN_16:
-   this->gain = 16;
-   break;
-   case GAIN_64:
-   this->gain = 64;
-   break;
-   case GAIN_1:
-   default:
-   this->gain = 1;
-   break;
-   };
-   
-   if (prescaler > 0)
-   this->prescaler = 1 << prescaler;
-   else
-   this->prescaler = 1;
-   */
   _writeReg(REG_GAIN, gain | prescaler);
 }
 
@@ -162,4 +129,3 @@ void TCS3414::clearInterrupt() {
   Wire.write(CMD_CLEARINT);
   Wire.endTransmission();
 }
-
