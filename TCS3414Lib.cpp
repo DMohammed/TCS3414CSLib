@@ -70,9 +70,9 @@ void TCS3414::getRGB(uint16_t * red, uint16_t * green, uint16_t * blue, uint16_t
   Wire.endTransmission();
 
   delay(20);
-  Wire.beginTransmission(TCS3414_ADDR);
+  //Wire.beginTransmission(TCS3414_ADDR);
   Wire.requestFrom(TCS3414_ADDR, 8);
-  while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
+  //while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
   byte * b = (byte*)green;
   b[0] = Wire.read();
   b[1] = Wire.read();
@@ -85,7 +85,7 @@ void TCS3414::getRGB(uint16_t * red, uint16_t * green, uint16_t * blue, uint16_t
   b = (byte*)clr;
   b[0] = Wire.read();
   b[1] = Wire.read();
-  Wire.endTransmission();
+  //Wire.endTransmission();
 }
 
 void TCS3414::getValues(uint16_t * values) {
@@ -94,15 +94,15 @@ void TCS3414::getValues(uint16_t * values) {
   Wire.write(CMD_WRITE | REG_BLOCK_READ);
   Wire.endTransmission();
 
-  Wire.beginTransmission(TCS3414_ADDR);
+  //Wire.beginTransmission(TCS3414_ADDR);
   Wire.requestFrom(TCS3414_ADDR, 8);
-  while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
+  //while (Wire.available() < 8);  // TODO : do we really want to force to receive 8 bytes ???
   byte * b = (byte*)values;
   for (int i = 0; i < 8; i++) {
     b[i] = Wire.read();
     //Serial.println(readingdata[i],BIN);
   }
-  Wire.endTransmission();
+  //Wire.endTransmission();
 }
 
 void TCS3414::disableADC() {
