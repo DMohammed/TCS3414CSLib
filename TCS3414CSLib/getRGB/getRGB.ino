@@ -33,7 +33,7 @@ uint16_t red, green, blue, clr;
 TCS3414CS tcs;
 
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(9600);
   Serial.print("RED\tGREEN\tBLUE\tCLEAR\n");
 
   Wire.begin();
