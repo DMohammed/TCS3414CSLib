@@ -71,6 +71,9 @@ void TCS3414CS::getRGB(uint16_t *red, uint16_t *green, uint16_t *blue,
 
   delay(20);
   Wire.requestFrom(TCS3414CS_ADDR, 8);
+  if(Wire.read()==8){
+
+  }
   byte *b = (byte *)green;
   b[0] = Wire.read();
   b[1] = Wire.read();
@@ -82,7 +85,6 @@ void TCS3414CS::getRGB(uint16_t *red, uint16_t *green, uint16_t *blue,
   b[1] = Wire.read();
   b = (byte *)clr;
   b[0] = Wire.read();
-  b[1] = Wire.read();
 }
 
 void TCS3414CS::getValues(uint16_t *values) {
